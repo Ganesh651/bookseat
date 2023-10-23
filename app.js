@@ -64,3 +64,14 @@ app.get("/available-seats", async(request,response)=>{
       const dbResponse = await db.all(getAvailableSeats)
       response.send(dbResponse)
 })
+
+
+app.put("/book-seat/:id", async(request,response)=>{
+      const {id} = request.params
+      console.log(request.body)
+      const {category,seat,availability} = request.body
+      const updateSeat = `UPDATE ticketbooking SET availability="${availability}",category="${category}",seat=${seat} where id = ${id}`
+      await db.run(updateSeat)
+      const updatedRow = await db.get(`SELECT * FROM ticketbooking WHERE id = ${id}`);
+      response.send(updatedRow);
+})

@@ -2,13 +2,32 @@
 POST http://localhost:5000/book-seat 
 Content-Type: application/json
 
-{     "id": 7,
-      "availabillity": "available",
-      "seat": 8,
-      "category": "Premium"
+{     "id": 2,
+      "availability": "available",
+      "seat": 9,
+      "category": "Standard"
 }
 ###
 
 GET http://localhost:5000/booked
 ###
 GET http://localhost:5000/available-seats
+###
+
+
+PUT http://localhost:5000/book-seat/1
+Content-Type: application/json
+
+{    "id": 4,
+     "availability": "available"
+}
+
+
+
+
+
+
+
+
+
+
