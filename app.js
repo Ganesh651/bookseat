@@ -54,13 +54,13 @@ app.post("/book-seat", async (request,response)=>{
 });
 
 app.get("/booked", async(request,response)=>{
-      const getBookedSeats = `select * from ticketbooking where availability = "available"`
+      const getBookedSeats = `select * from ticketbooking where availability = "unvailable"`
       const dbResponse = await db.all(getBookedSeats)
       response.send(dbResponse)
 })
 
 app.get("/available-seats", async(request,response)=>{
-       const getAvailableSeats = `select * from ticketbooking where availability = "unavailable"`
+       const getAvailableSeats = `select * from ticketbooking where availability = "available"`
       const dbResponse = await db.all(getAvailableSeats)
       response.send(dbResponse)
 })
