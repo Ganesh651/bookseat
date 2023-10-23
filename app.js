@@ -34,6 +34,7 @@ initialiseDBAndServer()
 app.post("/book-seat", async (request,response)=>{
       try{
             const {id,availability,seat,category} = request.body
+            console.log(availability)
             const isBooked = `SELECT * FROM ticketbooking where seat = ${seat} and category="${category}"`
             const dbResponse = await db.get(isBooked)
             if (dbResponse === undefined){
@@ -42,7 +43,7 @@ app.post("/book-seat", async (request,response)=>{
                   VALUES(${id},"${availability}",${seat},"${category}");`
                   const dbResponse = await db.run(bookASeatQuery)
                   const lastId = dbResponse.lastID
-                  response.send(`Seat has been booked ${lastId}`)
+                  response.send(`Seat has been booked ${seat}`)
             }else{
                   response.send("Unavailable")
             }
@@ -53,13 +54,13 @@ app.post("/book-seat", async (request,response)=>{
 });
 
 app.get("/booked", async(request,response)=>{
-      const getBookedSeats = `select * from ticketbooking where availability = "booked"`
+      const getBookedSeats = `select * from ticketbooking where availability = "available"`
       const dbResponse = await db.all(getBookedSeats)
       response.send(dbResponse)
 })
 
 app.get("/available-seats", async(request,response)=>{
-       const getAvailableSeats = `select * from ticketbooking where availability = "book"`
+       const getAvailableSeats = `select * from ticketbooking where availability = "unavailable"`
       const dbResponse = await db.all(getAvailableSeats)
       response.send(dbResponse)
 })
